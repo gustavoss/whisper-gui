@@ -38,11 +38,31 @@ def save_text_to_file(text):
     tmp.close()
     return tmp.name
 
-with gr.Blocks() as iface:
+with gr.Blocks(css="""
+    body { background: white; }
+    .upload-container, .transcription-container, .download-container {
+        background: #f0f0f0;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+    .download-btn {
+        background-color: #FF6F00 !important;
+        color: white !important;
+        border: none !important;
+        width: auto !important;
+        padding: 10px 20px !important;
+        font-size: 16px !important;
+    }
+""") as iface:
     audio_input = gr.Audio(sources=["upload", "microphone"], type="filepath", label="Envie um áudio ou grave")
     output_text = gr.Textbox(lines=10, max_lines=20, label="Transcrição")
-    download_btn = gr.Button("Baixar transcrição (.txt)")
+    download_btn = gr.Button("Baixar transcrição (.txt)", elem_classes="download-btn", variant="primary")
     download_file = gr.File(label="Download do arquivo")
+
+    audio_input.elem_classes = ["upload-container"]
+    output_text.elem_classes = ["transcription-container"]
+    download_file.elem_classes = ["download-container"]
 
     def transcribe_and_show(file):
         result = transcribe_audio(file)
