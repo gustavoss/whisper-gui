@@ -1,18 +1,17 @@
-# Usar a imagem do Python
 FROM python:3.9-slim
 
-# Definir o diretório de trabalho
-WORKDIR /app
+WORKDIR /
 
-# Copiar os arquivos de requisitos e instalar as dependências
+# Instalar FFmpeg (e ffprobe) como dependências de sistema
+RUN apt-get update && \
+    apt-get install -y ffmpeg && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar o restante dos arquivos da aplicação
-COPY app/ .
+COPY . .
 
-# Expor a porta em que a aplicação irá rodar
 EXPOSE 5000
 
-# Comando para iniciar a aplicação
 CMD ["python", "app.py"]
