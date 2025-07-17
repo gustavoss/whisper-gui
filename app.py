@@ -39,30 +39,28 @@ def save_text_to_file(text):
     return tmp.name
 
 with gr.Blocks(css="""
-    body { background: white; }
-    .upload-container, .transcription-container, .download-container {
-        background: #f0f0f0;
-        border-radius: 8px;
+    body {
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+    .gradio-container {
+        background-color: #f5f5f5;
+        max-width: 100% !important;
+        padding: 20px;
+    }
+    .upload-box, .transcription-box, .download-box {
+        background-color: white;
         padding: 12px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin-bottom: 12px;
     }
-    .download-btn {
-        background-color: #FF6F00 !important;
-        color: white !important;
-        border: none !important;
-        width: auto !important;
-        padding: 10px 20px !important;
-        font-size: 16px !important;
-    }
-""") as iface:
-    audio_input = gr.Audio(sources=["upload", "microphone"], type="filepath", label="Envie um áudio ou grave")
-    output_text = gr.Textbox(lines=10, max_lines=20, label="Transcrição")
-    download_btn = gr.Button("Baixar transcrição (.txt)", elem_classes="download-btn", variant="primary")
-    download_file = gr.File(label="Download do arquivo")
-
-    audio_input.elem_classes = ["upload-container"]
-    output_text.elem_classes = ["transcription-container"]
-    download_file.elem_classes = ["download-container"]
+""", fill_width=True) as iface:
+    audio_input = gr.Audio(sources=["upload", "microphone"], type="filepath", label="Envie um áudio ou grave", elem_classes=["upload-box"])
+    output_text = gr.Textbox(lines=10, max_lines=20, label="Transcrição", elem_classes=["transcription-box"])
+    download_btn = gr.Button("Baixar transcrição (.txt)", variant="primary")
+    download_file = gr.File(label="Download do arquivo", elem_classes=["download-box"])
 
     def transcribe_and_show(file):
         result = transcribe_audio(file)
