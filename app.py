@@ -113,4 +113,4 @@ with gr.Blocks(fill_width=True) as iface:
     download_btn.click(fn=prepare_download, inputs=output_text, outputs=download_file)
 
 if __name__ == "__main__":
-    iface.launch(server_name="0.0.0.0", server_port=5000)
+    iface.launch(server_name="0.0.0.0", server_port=5000, title="Whisper")
