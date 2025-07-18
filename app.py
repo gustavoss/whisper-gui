@@ -75,7 +75,7 @@ def save_text_to_file(text):
     tmp.close()
     return tmp.name
 
-with gr.Blocks(fill_width=True) as iface:
+with gr.Blocks(fill_width=True, title="Whisper") as iface:
     with gr.Row():
         audio_input = gr.File(
             label="Upload audio or video file",
@@ -113,4 +113,4 @@ with gr.Blocks(fill_width=True) as iface:
     download_btn.click(fn=prepare_download, inputs=output_text, outputs=download_file)
 
 if __name__ == "__main__":
-    iface.launch(server_name="0.0.0.0", server_port=5000, title="Whisper")
+    iface.launch(server_name="0.0.0.0", server_port=5000)
